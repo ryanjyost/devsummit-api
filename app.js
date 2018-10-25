@@ -1,3 +1,5 @@
+// configure app-wide settings here
+
 const express = require('express');
 const cors = require('cors');
 
@@ -9,5 +11,5 @@ app.use(express.json());
 
 app.use('/', routes);
 
-// Export your Express configuration so that it can be consumed by the Lambda handler
+// Export your Express configuration
 module.exports = app;
