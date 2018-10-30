@@ -34,7 +34,6 @@ router.get(`${apiDoc.basePath}/impacts`, function(req, res) {
 	console.log(req.query);
 	let {lat, lon, distance} = req.query;
 
-	// const results =
 
 	if(!distance){
     distance = 100; //km
