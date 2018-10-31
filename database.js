@@ -4,6 +4,7 @@ const elasticsearch = require('elasticsearch');
 
 module.exports = {
 	getById,
+	getImpacts
 };
 
 const esClient = new elasticsearch.Client({
@@ -33,12 +34,19 @@ async function getImpacts(lat, lon, distance = 100) {
 		type: 'meteorite_landing',
 		body: {
 			query: {
-				match: {
-					nasaId: id,
+				bool: {
+					must: {
+						match_all: {}
+					},
+					filter: {
+						geo_distance: {
+							distance: distance + "km",
+							geoLocation: lat + "," + lon
+						}
+					}
 				}
 			}
 		}
 	});
-
-	return impacts;
+	return impacts.hits.hits;
 }
