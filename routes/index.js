@@ -7,7 +7,7 @@ module.exports = router;
 
 
 router.get('/api-doc', function(req, res) {
-  res.json({doc: apiDoc});
+  res.json({doc: req.apiDoc});
 });
 
 router.get(`${apiDoc.basePath}/impacts`, async function(req, res) {
