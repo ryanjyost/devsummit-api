@@ -1,28 +1,26 @@
 const express = require('express');
 const db = require('../database');
 const router = express.Router();
+const apiDoc = require('../api/api-doc');
 module.exports = router;
 
 
 
-router.get('/health', function(req, res) {
-  res.json({ status: 'ok' });
+router.get('/api-doc', function(req, res) {
+  res.json({doc: apiDoc});
 });
 
-// router.get(`${apiDoc.basePath}/impacts`, function(req, res) {
-// 	console.log(req.query);
-// 	let {lat, lon, distance} = req.query;
-//
-//
-// 	if(!distance){
-//     distance = 100; //km
-//   }
-//
-//   res.json({test: 'hey'})
-// });
+router.get(`${apiDoc.basePath}/impacts`, async function(req, res) {
+	console.log(req.query);
+	let {lat, lon, distance} = req.query;
+
+	const response = await db.getImpacts(Number(req.query.lat), Number(req.query.lon), req.query.distance);
+  res.json(response)
+});
 
 
 router.get('/:id', async function(req, res) {
+  console.log('Should not log')
   const landing = await db.getById(req.params.id);
   res.json({ metoerite: landing });
 });

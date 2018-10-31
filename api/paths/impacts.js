@@ -6,7 +6,8 @@ module.exports =  function() {
 	};
 
 	function GET(req, res, next) {
-		res.status(200).json(database.getImpacts(req.query.lat, req.query.lon, req.query.distance));
+		console.log('HEYYYY')
+		res.status(200).json(database.getImpacts(Number(req.query.lat), Number(req.query.lon), req.query.distance));
 	}
 
 	// NOTE: We could also use a YAML string here.

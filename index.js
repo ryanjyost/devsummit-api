@@ -1,7 +1,7 @@
 require('dotenv').config(); // set env variables as the first thing in this app
 const app = require('./app');
 const initialize = require('express-openapi').initialize;
-const v1ApiDoc = require('./api/api-doc');
+const v1ApiDoc = require('./api/api-doc.js');
 const YAML = require('yamljs');
 
 initialize({
