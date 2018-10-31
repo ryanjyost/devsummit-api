@@ -6,6 +6,7 @@ module.exports =  function() {
 	};
 
 	async function GET(req, res, next) {
+		// req.validateRequest();
 		res.status(200).json(await database.getImpacts(Number(req.query.lat), Number(req.query.lon), req.query.distance));
 	}
 
@@ -18,13 +19,15 @@ module.exports =  function() {
 				in: 'query',
 				name: 'lat',
 				required: true,
-				type: 'number'
+				type: 'number',
+				"x-openapi-coercion-strict": true
 			},
 			{
 				in: 'query',
 				name: 'lon',
 				required: true,
-				type: 'number'
+				type: 'number',
+				"x-openapi-coercion-strict": true
 			},
 			{
 				in: 'query',

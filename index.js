@@ -18,9 +18,10 @@ initialize({
 	// NOTE: If using yaml it's necessary to use "fs" e.g.
 	// apiDoc: fs.readFileSync(path.resolve(__dirname, './api-v1/api-doc.yml'), 'utf8'),
 	apiDoc: v1ApiDoc,
-	// dependencies: {
-	// 	worldsService: v1WorldsService
-	// },
+	docsPath: "/",
+	errorMiddleware: function(err, req, res, next) { // only handles errors for /v3/*
+		res.json({error: err});
+	},
 	paths: path.resolve(__dirname, './api/paths')
 });
 
