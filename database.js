@@ -28,7 +28,7 @@ async function getById(id) {
 	return landing.hits.hits[0];
 }
 
-async function getImpacts(lat, lon, distance = 100) {
+async function getImpacts(lat, lon, distance = 100, dataSize = 1000) {
 	const impacts = await esClient.search({
 		index: 'devsummit',
 		type: 'meteorite_landing',
@@ -45,8 +45,19 @@ async function getImpacts(lat, lon, distance = 100) {
 						}
 					}
 				}
-			}
+			},
+			size: dataSize,
+			sort: [
+				{
+					_geo_distance: {
+						geoLocation: lat + "," + lon,
+						order: "desc",
+						distance_type: "plane"
+					}
+				}
+			]
 		}
 	});
 	return impacts.hits.hits;
 }
+
