@@ -7,17 +7,17 @@ module.exports =  function() {
 	};
 
 	async function GET(req, res, next) {
-		let {lat, lon, distance, dataSize} = req.query;
+		let {lat, lon, distance, records} = req.query;
 
 		lat = +lat;
 		lon = +lon;
 		distance = +distance;
-		dataSize = +dataSize;
+		records = +records;
 
 		if(!lat || !lon){
 			res.status(400).json({error: 'lat and lon must be numbers'})
 		} else {
-				res.status(200).json(await database.getImpacts(lat, lon, distance || 100, dataSize || 1000));
+				res.status(200).json(await database.getImpacts(lat, lon, distance || 100, records || 1000));
 		}
 
 
@@ -51,7 +51,7 @@ module.exports =  function() {
 			},
 			{
 				in: 'query',
-				name: 'dataSize',
+				name: 'records',
 				required: false,
 				type: 'number'
 			},
