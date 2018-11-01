@@ -1,4 +1,5 @@
 const database = require('../../database');
+const { check, validationResult } = require('express-validator/check');
 
 module.exports =  function() {
 	let operations = {
@@ -6,8 +7,24 @@ module.exports =  function() {
 	};
 
 	async function GET(req, res, next) {
-		// req.validateRequest();
-		res.status(200).json(await database.getImpacts(Number(req.query.lat), Number(req.query.lon), req.query.distance));
+		let {lat, lon, distance} = req.query;
+
+		lat = +lat;
+		lon = +lon;
+		distance = +distance;
+
+		if(!lat || !lon){
+			res.status(400).json({error: 'lat and lon must be numbers'})
+		} else {
+			if(!distance){
+				res.status(200).json(await database.getImpacts(lat, lon));
+			} else {
+				res.status(200).json(await database.getImpacts(lat, lon, distance));
+			}
+
+		}
+
+
 	}
 
 	// NOTE: We could also use a YAML string here.
